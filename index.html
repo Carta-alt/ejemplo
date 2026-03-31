@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luna Salina | Carta Digital</title>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    :root{
+      --bg:#f6f0e8;
+      --paper:#fffaf4;
+      --paper-2:#f3ebe2;
+      --ink:#1f2a2c;
+      --muted:#6f7a7d;
+      --line:rgba(31,42,44,0.10);
+      --teal:#2f6f73;
+      --teal-soft:#7fa8aa;
+      --coral:#cf6f52;
+      --gold:#b98b4d;
+      --olive:#7d8e68;
+      --shadow:0 18px 45px rgba(22,26,28,0.10);
+      --radius:26px;
+      --radius-lg:38px;
+      --max:1240px;
+    }
+
+    body{
+      font-family: "Georgia", serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(47,111,115,0.10), transparent 18%),
+        radial-gradient(circle at 90% 12%, rgba(207,111,82,0.10), transparent 18%),
+        linear-gradient(180deg, #faf5ef 0%, #f6f0e8 100%);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.35;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size:28px 28px;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,0.35), transparent 85%);
+    }
+
+    .floating-nav{
+      position:fixed;
+      top:22px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:1000;
+      width:min(920px, calc(100% - 24px));
+      background:rgba(255,250,244,0.75);
+      backdrop-filter:blur(12px);
+      border:1px solid rgba(31,42,44,0.08);
+      border-radius:999px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.06);
+      padding:10px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .brand-mini{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding-left:8px;
+      min-width:max-content;
+    }
+
+    .brand-dot{
+      width:16px;
+      height:16px;
+      border-radius:50%;
+      background:linear-gradient(135deg, var(--teal), var(--coral));
+      box-shadow:0 0 0 6px rgba(47,111,115,0.10);
+    }
+
+    .brand-mini strong{
+      font-size:0.96rem;
+      letter-spacing:1px;
+    }
+
+    .nav-links{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      justify-content:flex-end;
+    }
+
+    .nav-links a{
+      text-decoration:none;
+      color:var(--ink);
+      font-size:0.93rem;
+      padding:10px 14px;
+      border-radius:999px;
+      transition:.25s ease;
+    }
+
+    .nav-links a:hover{
+      background:rgba(47,111,115,0.10);
+      color:var(--teal);
+    }
+
+    .hero-wrap{
+      width:100%;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:110px 20px 24px;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.05fr 0.95fr;
+      gap:22px;
+      align-items:stretch;
+    }
+
+    .hero-main{
+      background:linear-gradient(135deg, rgba(255,250,244,0.95), rgba(243,235,226,0.92));
+      border:1px solid var(--line);
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow);
+      padding:56px 48px;
+      position:relative;
+      overflow:hidden;
+      min-height:540px;
+    }
+
+    .hero-main::before{
+      content:"";
+      position:absolute;
+      width:360px;
+      height:360px;
+      right:-110px;
+      top:-110px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(47,111,115,0.12), transparent 70%);
+    }
+
+    .hero-main::after{
+      content:"";
+      position:absolute;
+      width:280px;
+      height:280px;
+      left:-90px;
+      bottom:-90px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(207,111,82,0.12), transparent 70%);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      color:var(--teal);
+      text-transform:uppercase;
+      letter-spacing:3px;
+      font-size:.78rem;
+      margin-bottom:18px;
+      position:relative;
+      z-index:2;
+    }
+
+    .eyebrow::before{
+      content:"";
+      width:32px;
+      height:2px;
+      background:var(--teal-soft);
+      display:block;
+    }
+
+    h1{
+      font-size:5rem;
+      line-height:.90;
+      margin-bottom:18px;
+      letter-spacing:-1.5px;
+      position:relative;
+      z-index:2;
+    }
+
+    h1 span{
+      color:var(--teal);
+      font-style:italic;
+    }
+
+    .hero-text{
+      max-width:620px;
+      font-size:1.08rem;
+      line-height:1.85;
+      color:var(--muted);
+      margin-bottom:30px;
+      position:relative;
+      z-index:2;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      position:relative;
+      z-index:2;
+    }
+
+    .btn{
+      text-decoration:none;
+      padding:14px 22px;
+      border-radius:999px;
+      font-weight:bold;
+      transition:.25s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--teal), #4e8d91);
+      color:white;
+      box-shadow:0 10px 20px rgba(47,111,115,0.18);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn-secondary{
+      color:var(--ink);
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.55);
+    }
+
+    .btn-secondary:hover{
+      transform:translateY(-2px);
+      background:white;
+    }
+
+    .hero-side{
+      display:grid;
+      grid-template-rows:1fr auto;
+      gap:22px;
+    }
+
+    .visual-card{
+      background:
+        linear-gradient(160deg, rgba(47,111,115,0.95), rgba(29,59,62,0.98));
+      color:white;
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow);
+      padding:34px;
+      position:relative;
+      overflow:hidden;
+      min-height:350px;
+    }
+
+    .visual-card::before{
+      content:"";
+      position:absolute;
+      inset:auto -60px -60px auto;
+      width:220px;
+      height:220px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.08);
+    }
+
+    .visual-card::after{
+      content:"";
+      position:absolute;
+      inset:30px auto auto 30px;
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      border:1px dashed rgba(255,255,255,0.16);
+    }
+
+    .art{
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      z-index:2;
+    }
+
+    .plate{
+      width:270px;
+      height:270px;
+      border-radius:50%;
+      background:
+        radial-gradient(circle at center, #fffaf5 0 46%, #e8ddd0 46% 54%, #fffaf5 54% 100%);
+      box-shadow:
+        0 28px 45px rgba(0,0,0,0.18),
+        inset 0 0 0 2px rgba(255,255,255,0.55);
+      position:relative;
+    }
+
+    .food-1,.food-2,.food-3,.food-4{
+      position:absolute;
+      border-radius:999px;
+    }
+
+    .food-1{
+      width:128px;
+      height:52px;
+      background:linear-gradient(135deg, #d07c52, #b25f3b);
+      left:68px;
+      top:86px;
+      transform:rotate(-12deg);
+      box-shadow:0 8px 14px rgba(0,0,0,0.12);
+    }
+
+    .food-2{
+      width:82px;
+      height:24px;
+      background:linear-gradient(135deg, #7c9e6e, #607e53);
+      left:94px;
+      top:137px;
+      transform:rotate(18deg);
+    }
+
+    .food-3{
+      width:24px;
+      height:24px;
+      background:#e8b95f;
+      left:84px;
+      top:74px;
+      box-shadow:42px 8px 0 #e8b95f, 94px 26px 0 #e8b95f, 54px 52px 0 #e8b95f;
+    }
+
+    .food-4{
+      width:14px;
+      height:14px;
+      background:#2f6f73;
+      left:150px;
+      top:86px;
+      box-shadow:22px 50px 0 #2f6f73, -36px 58px 0 #2f6f73, 10px 86px 0 #2f6f73;
+    }
+
+    .meta-grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:22px;
+    }
+
+    .meta{
+      background:rgba(255,250,244,0.92);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:24px 22px;
+      box-shadow:var(--shadow);
+    }
+
+    .meta strong{
+      display:block;
+      font-size:1.8rem;
+      color:var(--teal);
+      margin-bottom:8px;
+    }
+
+    .meta span{
+      color:var(--muted);
+      line-height:1.55;
+      font-size:0.95rem;
+    }
+
+    .section{
+      width:100%;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:64px 20px 0;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:24px;
+      margin-bottom:30px;
+    }
+
+    .section-head-left small{
+      text-transform:uppercase;
+      letter-spacing:3px;
+      color:var(--coral);
+      display:block;
+      margin-bottom:12px;
+      font-size:.76rem;
+    }
+
+    .section-head-left h2{
+      font-size:2.8rem;
+      line-height:1;
+    }
+
+    .section-head-right{
+      max-width:460px;
+      color:var(--muted);
+      line-height:1.8;
+    }
+
+    .category{
+      margin-bottom:30px;
+      scroll-margin-top:120px;
+    }
+
+    .category-title{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:18px;
+      font-size:1.6rem;
+    }
+
+    .category-title::before{
+      content:"";
+      width:38px;
+      height:2px;
+      background:linear-gradient(90deg, var(--teal), transparent);
+      display:block;
+    }
+
+    .menu-grid{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:18px;
+    }
+
+    .dish{
+      background:rgba(255,250,244,0.92);
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:24px 22px;
+      box-shadow:var(--shadow);
+      transition:.25s ease;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .dish::before{
+      content:"";
+      position:absolute;
+      inset:0 auto 0 0;
+      width:4px;
+      background:linear-gradient(180deg, var(--teal), var(--coral));
+      opacity:0;
+      transition:.25s ease;
+    }
+
+    .dish:hover{
+      transform:translateY(-4px);
+      border-color:rgba(47,111,115,0.18);
+    }
+
+    .dish:hover::before{
+      opacity:1;
+    }
+
+    .dish-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:18px;
+      margin-bottom:12px;
+    }
+
+    .dish-top h3{
+      font-size:1.22rem;
+      line-height:1.25;
+    }
+
+    .price{
+      font-weight:bold;
+      color:var(--teal);
+      white-space:nowrap;
+      font-size:1rem;
+    }
+
+    .dish p{
+      color:var(--muted);
+      line-height:1.75;
+      margin-bottom:15px;
+      font-size:0.97rem;
+    }
+
+    .badge-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .badge{
+      font-size:.82rem;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(47,111,115,0.08);
+      color:var(--teal);
+      border:1px solid rgba(47,111,115,0.10);
+    }
+
+    .experience{
+      display:grid;
+      grid-template-columns:1.1fr 0.9fr;
+      gap:22px;
+      margin-top:12px;
+    }
+
+    .experience-card,
+    .chef-card{
+      background:rgba(255,250,244,0.92);
+      border:1px solid var(--line);
+      border-radius:32px;
+      box-shadow:var(--shadow);
+      padding:32px;
+    }
+
+    .experience-card h3,
+    .chef-card h3{
+      font-size:1.8rem;
+      margin-bottom:14px;
+    }
+
+    .experience-card p,
+    .chef-card p{
+      color:var(--muted);
+      line-height:1.85;
+    }
+
+    .quote{
+      margin-top:18px;
+      padding:20px;
+      border-radius:22px;
+      background:linear-gradient(135deg, rgba(47,111,115,0.08), rgba(207,111,82,0.08));
+      font-style:italic;
+      color:var(--ink);
+      line-height:1.7;
+    }
+
+    .footer{
+      width:100%;
+      max-width:var(--max);
+      margin:70px auto 40px;
+      padding:0 20px;
+    }
+
+    .footer-box{
+      background:linear-gradient(135deg, var(--ink), #273437);
+      color:white;
+      border-radius:34px;
+      padding:34px 30px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:20px;
+      align-items:center;
+      box-shadow:0 20px 50px rgba(0,0,0,0.18);
+    }
+
+    .footer-box h3{
+      font-size:2rem;
+      margin-bottom:10px;
+    }
+
+    .footer-box p{
+      color:rgba(255,255,255,0.72);
+      line-height:1.7;
+      max-width:650px;
+    }
+
+    .social{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      color:white;
+      padding:15px 20px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:999px;
+      font-weight:bold;
+      transition:.25s ease;
+      white-space:nowrap;
+    }
+
+    .social:hover{
+      transform:translateY(-2px);
+      background:rgba(255,255,255,0.10);
+    }
+
+    .social svg{
+      width:22px;
+      height:22px;
+      fill:#fff;
+    }
+
+    @media (max-width:1100px){
+      .hero,
+      .experience{
+        grid-template-columns:1fr;
+      }
+
+      .meta-grid{
+        grid-template-columns:1fr 1fr 1fr;
+      }
+    }
+
+    @media (max-width:900px){
+      .menu-grid,
+      .meta-grid,
+      .footer-box{
+        grid-template-columns:1fr;
+      }
+
+      .section-head{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      h1{
+        font-size:3.8rem;
+      }
+    }
+
+    @media (max-width:700px){
+      .floating-nav{
+        border-radius:30px;
+        padding:12px;
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .nav-links{
+        justify-content:flex-start;
+      }
+
+      .hero-wrap{
+        padding-top:140px;
+      }
+
+      .hero-main,
+      .visual-card,
+      .experience-card,
+      .chef-card{
+        padding:28px 22px;
+      }
+
+      h1{
+        font-size:3rem;
+      }
+
+      .section-head-left h2{
+        font-size:2.2rem;
+      }
+
+      .plate{
+        width:220px;
+        height:220px;
+      }
+
+      .food-1{
+        width:104px;
+        height:42px;
+        left:56px;
+        top:72px;
+      }
+
+      .food-2{
+        width:70px;
+        height:20px;
+        left:76px;
+        top:118px;
+      }
+
+      .food-3{
+        left:70px;
+        top:62px;
+      }
+
+      .food-4{
+        left:128px;
+        top:74px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="floating-nav">
+    <div class="brand-mini">
+      <span class="brand-dot"></span>
+      <strong>Luna Salina</strong>
+    </div>
+    <div class="nav-links">
+      <a href="#entrantes">Entrantes</a>
+      <a href="#principales">Principales</a>
+      <a href="#postres">Postres</a>
+      <a href="#bebidas">Bebidas</a>
+      <a href="#experiencia">Experiencia</a>
+    </div>
+  </nav>
+
+  <div class="hero-wrap">
+    <section class="hero">
+      <div class="hero-main">
+        <div class="eyebrow">Editorial menu experience</div>
+        <h1>Luna <span>Salina</span></h1>
+        <p class="hero-text">
+          Una carta digital concebida como una experiencia visual de autor: elegante,
+          luminosa, sofisticada y muy distinta a una web de restaurante tradicional.
+          Aquí la comida se presenta como una colección curada, con ritmo visual y una
+          estética más cercana a una revista premium que a una carta clásica.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#entrantes" class="btn btn-primary">Explorar carta</a>
+          <a href="#experiencia" class="btn btn-secondary">Ver concepto</a>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="visual-card">
+          <div class="art">
+            <div class="plate">
+              <span class="food-1"></span>
+              <span class="food-2"></span>
+              <span class="food-3"></span>
+              <span class="food-4"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="meta-grid">
+          <div class="meta">
+            <strong>05</strong>
+            <span>Entrantes con enfoque fresco, delicado y sorprendente.</span>
+          </div>
+          <div class="meta">
+            <strong>08</strong>
+            <span>Principales con equilibrio entre técnica, sabor y presentación.</span>
+          </div>
+          <div class="meta">
+            <strong>12h</strong>
+            <span>Estética pensada para sentirse moderna, ligera y memorable.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-head-left">
+        <small>Colección gastronómica</small>
+        <h2>Una carta con otro lenguaje visual</h2>
+      </div>
+      <div class="section-head-right">
+        Este diseño evita el enfoque de hero tradicional cálido y también se aleja del
+        lenguaje oscuro de smoke house. En su lugar, apuesta por una presentación clara,
+        artística y muy editorial. :contentReference[oaicite:2]{index=2}
+      </div>
+    </div>
+
+    <div class="category" id="entrantes">
+      <div class="category-title">Entrantes</div>
+      <div class="menu-grid">
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Tartar Brisa Marina</h3>
+            <div class="price">9,80€</div>
+          </div>
+          <p>Dados frescos de atún, emulsión cítrica, aguacate suave y brotes con aceite aromático.</p>
+          <div class="badge-row">
+            <span class="badge">Fresco</span>
+            <span class="badge">Ligero</span>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Croqueta de Sal y Mantequilla</h3>
+            <div class="price">8,20€</div>
+          </div>
+          <p>Croquetas cremosas con jamón curado y acabado crujiente, servidas con crema suave de queso.</p>
+          <div class="badge-row">
+            <span class="badge">Cremoso</span>
+            <span class="badge">Clásico</span>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Verduras al Humo Blanco</h3>
+            <div class="price">8,90€</div>
+          </div>
+          <p>Selección de temporada asada, yogur especiado, semillas tostadas y aceite verde.</p>
+          <div class="badge-row">
+            <span class="badge">Vegetal</span>
+            <span class="badge">De temporada</span>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Pan Cristal con Marea Roja</h3>
+            <div class="price">7,60€</div>
+          </div>
+          <p>Pan crujiente con tomate confitado, anchoa ahumada y sal fina de escamas.</p>
+          <div class="badge-row">
+            <span class="badge">Crujiente</span>
+            <span class="badge">Mediterráneo</span>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="category" id="principales">
+      <div class="category-title">Principales</div>
+      <div class="menu-grid">
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Arroz Luna de Costa</h3>
+            <div class="price">17,40€</div>
+          </div>
+          <p>Arroz meloso de marisco con caldo intenso, toque azafranado y acabado de lima.</p>
+          <div class="badge-row">
+            <span class="badge">Meloso</span>
+            <span class="badge">Costa</span>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Solomillo Salina</h3>
+            <div class="price">19,80€</div>
+          </div>
+          <p>Solomillo marcado, puré de apionabo, salsa reducida y mini verduras glaseadas.</p>
+          <div class="badge-row">
+            <span class="badge">Premium</span>
+            <span class="badge">Autor</span>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Pasta Coral de Setas</h3>
+            <div class="price">14,20€</div>
+          </div>
+          <p>Cintas de pasta fresca con crema ligera de setas, parmesano curado y hierbas frescas.</p>
+          <div class="badge-row">
+            <span class="badge">Pasta fresca</span>
+            <span class="badge">Suave</span>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Bacalao en Mantequilla Verde</h3>
+            <div class="price">18,60€</div>
+          </div>
+          <p>Lomo de bacalao confitado con mantequilla de perejil, patata cremosa y aceite de limón.</p>
+          <div class="badge-row">
+            <span class="badge">Pescado</span>
+            <span class="badge">Elegante</span>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Pollo Dorado de Jardín</h3>
+            <div class="price">15,10€</div>
+          </div>
+          <p>Suprema de pollo jugosa con jugo asado, crema de maíz tierno y chips vegetales.</p>
+          <div class="badge-row">
+            <span class="badge">Jugoso</span>
+            <span class="badge">Confort</span>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Risotto Ceniza Clara</h3>
+            <div class="price">15,90€</div>
+          </div>
+          <p>Arroz cremoso con parmesano, setas de temporada y aceite aromático de trufa suave.</p>
+          <div class="badge-row">
+            <span class="badge">Cremoso</span>
+            <span class="badge">Trufa</span>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="category" id="postres">
+      <div class="category-title">Postres</div>
+      <div class="menu-grid">
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Cheesecake de Nube</h3>
+            <div class="price">6,20€</div>
+          </div>
+          <p>Tarta de queso cremosa, base fina de galleta y compota limpia de frutos rojos.</p>
+          <div class="badge-row">
+            <span class="badge">Cremoso</span>
+            <span class="badge">Suave</span>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Flan Ámbar</h3>
+            <div class="price">5,40€</div>
+          </div>
+          <p>Flan casero de vainilla con caramelo limpio y acabado de ralladura cítrica.</p>
+          <div class="badge-row">
+            <span class="badge">Clásico</span>
+            <span class="badge">Casero</span>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Milhojas Costa Clara</h3>
+            <div class="price">6,60€</div>
+          </div>
+          <p>Hojaldre fino, crema pastelera ligera y fruta fresca con brillo muy delicado.</p>
+          <div class="badge-row">
+            <span class="badge">Hojaldre</span>
+            <span class="badge">Ligero</span>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Chocolate Templado de Autor</h3>
+            <div class="price">6,90€</div>
+          </div>
+          <p>Bizcocho tierno de cacao, crema vainilla y crujiente fino de almendra tostada.</p>
+          <div class="badge-row">
+            <span class="badge">Chocolate</span>
+            <span class="badge">Intenso</span>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="category" id="bebidas">
+      <div class="category-title">Bebidas</div>
+      <div class="menu-grid">
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Agua Mineral</h3>
+            <div class="price">2,00€</div>
+          </div>
+          <p>Agua mineral servida muy fría.</p>
+          <div class="badge-row">
+            <span class="badge">Fría</span>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Limonada Botánica</h3>
+            <div class="price">3,80€</div>
+          </div>
+          <p>Limonada casera con hierbabuena, piel cítrica y un toque herbáceo.</p>
+          <div class="badge-row">
+            <span class="badge">Casera</span>
+            <span class="badge">Fresca</span>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Vino Blanco de Casa</h3>
+            <div class="price">3,90€</div>
+          </div>
+          <p>Copa ligera, aromática y muy versátil para pescado, arroz o entrantes.</p>
+          <div class="badge-row">
+            <span class="badge">Blanco</span>
+            <span class="badge">Aromático</span>
+          </div>
+        </article>
+
+        <article class="dish">
+          <div class="dish-top">
+            <h3>Tinto Reserva Suave</h3>
+            <div class="price">4,20€</div>
+          </div>
+          <p>Copa de vino tinto redonda, amable y equilibrada.</p>
+          <div class="badge-row">
+            <span class="badge">Tinto</span>
+            <span class="badge">Equilibrado</span>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="experience" id="experiencia">
+      <div class="experience-card">
+        <h3>¿Por qué este estilo es distinto?</h3>
+        <p>
+          Porque no se apoya en un hero clásico de restaurante acogedor ni en una estética
+          de humo y carne. Aquí el valor está en la dirección artística: colores claros,
+          composición editorial, asimetría controlada, sensación premium y una navegación
+          que parece la de una marca de diseño más que la de un menú convencional. :contentReference[oaicite:3]{index=3}
+        </p>
+        <div class="quote">
+          “Una carta pensada para que el cliente no solo lea platos, sino que sienta que está
+          entrando en una identidad visual única.”
+        </div>
+      </div>
+
+      <div class="chef-card">
+        <h3>Lo que transmite</h3>
+        <p>
+          Elegancia contemporánea, calma visual, orden, limpieza y personalidad.
+          Ideal para un restaurante que quiera parecer más exclusivo, más cuidado y
+          más diferente que la típica carta digital de bar.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-box">
+      <div>
+        <h3>Luna Salina</h3>
+        <p>
+          Carta digital de estilo editorial. Minimalismo cálido, presencia de marca
+          y una experiencia visual pensada para destacar frente a diseños más tradicionales.
+        </p>
+      </div>
+
+      <a href="#" class="social" aria-label="Instagram Luna Salina">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.8A3.95 3.95 0 0 0 3.8 7.75v8.5a3.95 3.95 0 0 0 3.95 3.95h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5a3.95 3.95 0 0 0-3.95-3.95h-8.5zm8.9 1.35a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.8A3.2 3.2 0 1 0 12 15.2 3.2 3.2 0 0 0 12 8.8z"/>
+        </svg>
+        <span>@lunasalina</span>
+      </a>
+    </div>
+  </footer>
+
+</body>
+</html>
